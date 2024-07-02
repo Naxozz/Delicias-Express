@@ -37,14 +37,12 @@ de entrega o están disponibles para ser recogidos en el restaurante.
 
 Estas son las tecnologías que han sido desarrolladas en el proyecto:
 
-- ![HTML5](https://img.shields.io/badge/HTML5-E34F26.svg?style=for-the-badge&logo=HTML5&logoColor=white)
-- ![CSS3](https://img.shields.io/badge/CSS3-1572B6.svg?style=for-the-badge&logo=CSS3&logoColor=white)
-- ![Blazor](https://img.shields.io/badge/Blazor-512BD4?logo=blazor&logoColor=fff&style=for-the-badge)
-- ![C#](https://img.shields.io/badge/C%23-512BD4?logo=csharp&logoColor=fff&style=for-the-badge)
-- ![.NET](https://img.shields.io/badge/.NET-512BD4?logo=dotnet&logoColor=fff&style=for-the-badge)
-- ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1.svg?style=for-the-badge&logo=PostgreSQL&logoColor=white)
-- ![Docker](https://img.shields.io/badge/Docker-2496ED.svg?style=for-the-badge&logo=Docker&logoColor=white)
-- ![Git](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=fff&style=for-the-badge)
+!HTML5
+!CSS3
+!Python
+!Django
+!SQLite
+!Git
 
 La razón de por qué se ha escogido estas tecnologías para el desarrollo del proyecto es, meramente el desarrollo rápido, ágil y estructurado y con las tecnologías escogidas se puede
 lograr este objetivo.
