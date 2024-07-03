@@ -1,0 +1,15 @@
+user:admin
+password:admin
+
+
+#cliente
+user: 
+
+password:
+
+
+#proveedor
+
+user: 
+
+password:
