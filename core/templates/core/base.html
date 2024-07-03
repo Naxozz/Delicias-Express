@@ -1,0 +1,152 @@
+{% load static %}
+
+{% block css %}
+
+
+{% endblock css %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Delicias Express</title>
+  <!-- base:css -->
+  <link rel="stylesheet" href="{% static 'core/vendors/mdi/css/materialdesignicons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'core/vendors/css/vendor.bundle.base.css' %}">
+
+  <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+  
+  <link rel="shortcut icon" href="{% static 'core/images/logo_git.png' %}" />
+</head>
+<body >
+  <div class="container-scroller d-flex">
+    <!-- partial:./partials/_sidebar.html -->
+    <nav class="sidebar sidebar-offcanvas"  style="background-color: rgb(246, 66, 39);">
+      <ul class="nav">
+        <li class="nav-item sidebar-category">
+          <p>{{ user.username }}</p>
+          <span></span>
+        </li>
+        <li class="nav-item sidebar-category">
+          <p>Menu</p>
+          <span></span>
+        </li>
+        
+
+        {% if user.is_authenticated %}
+    <!-- Menú para usuarios autenticados -->
+    <ul class="nav">
+        {% if user.groups.first.name == "cliente" %}
+        <!-- Menú específico para clientes -->
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">
+                <i class="mdi mdi-emoticon menu-icon"></i>
+                <span class="menu-title">Home</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'ordenes' %}">
+                <i class="mdi mdi-chart-pie menu-icon"></i>
+                <span class="menu-title">Ordenes</span>
+            </a>
+        </li>
+        {% endif %}
+
+        {% if user.groups.first.name == "proveedor" %}
+        <!-- Menú específico para proveedores -->
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'formulario' %}">
+                <i class="mdi mdi-view-headline menu-icon"></i>
+                <span class="menu-title">Formulario</span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+{% endif %}
+<!-- Categoría y opciones de cuenta -->
+<li class="nav-item sidebar-category">
+    <p>Páginas</p>
+    <span></span>
+</li>
+<li class="nav-item">
+    <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+        <i class="mdi mdi-account menu-icon"></i>
+        <span class="menu-title">Cuenta</span>
+        <i class="menu-arrow"></i>
+    </a>
+    <div class="collapse" id="auth">
+        <ul class="nav flex-column sub-menu">
+            {% if not user.is_authenticated %}
+            <li class="nav-item"> <a class="nav-link" href="{% url 'login' %}"> Iniciar Sesión </a></li>
+            <li class="nav-item"> <a class="nav-link" href="{% url 'register' %}"> Registrarse</a></li>
+            {% else %}
+            <li class="nav-item"> <a class="nav-link" href="{% url 'logout' %}"> Cerrar Sesión </a></li>
+            {% endif %}
+        </ul>
+    </div>
+</li>
+        
+       
+      </ul>
+    </nav>
+    <!-- partial -->
+    <div class="container page-body-wrapper " >
+      <!-- partial:./partials/_navbar.html -->
+      <nav class=" col-lg-12 col-12 px-0 py-0 py-lg-4 d-flex flex-row">
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+         
+          
+            <img src="{% static 'core/images/logo_git.png' %}" alt="logo" width="900" height="360" />
+          
+        </div>
+
+       
+      </nav>
+      
+      {% block contenido %}
+
+
+      {% endblock %}
+
+        <footer class="footer">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © Delicias-Express 2024</span>
+                <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Distributed By: <a href="https://www.themewagon.com/" target="_blank">Pepsi</a></span>
+                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a href="https://www.bootstrapdash.com/" target="_blank">Cabo Godoy</a> FREE Fabian</span>
+              </div>
+            </div>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+
+  <!-- base:js -->
+  <script src="{% static 'core/vendors/js/vendor.bundle.base.js' %}"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page-->
+  <script src="{% static 'core/vendors/chart.js/Chart.min.js' %}"></script>
+  <!-- End plugin js for this page-->
+  <!-- inject:js -->
+  <script src="{% static 'core/js/off-canvas.js' %}"></script>
+  <script src="{% static 'core/js/hoverable-collapse.js' %}"></script>
+  <script src="{% static 'core/js/template.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.21/jspdf.plugin.autotable.min.js"></script>
+  <!-- endinject -->
+  <!-- plugin js for this page -->
+  <!-- End plugin js for this page -->
+  <!-- Custom js for this page-->
+  <script src="{% static 'core/js/dashboard.js' %}"></script>
+  <!-- End custom js for this page-->
+</body>
+
+</html>

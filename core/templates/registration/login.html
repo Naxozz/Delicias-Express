@@ -1,0 +1,33 @@
+{% extends 'core/base.html'%}
+{% load static %}
+{% block css %}
+
+{% endblock %}
+{% block contenido %}
+{% load crispy_forms_tags %}
+
+<section class="vh-100">
+  <div class="container py-5 h-100">
+    <div class="row d-flex align-items-center justify-content-center h-100">
+      <div class="col-md-8 col-lg-6 col-xl-5">
+        <div class="card shadow-2-strong" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+
+            <h1 class="mb-5"><strong>Delicias-Express</strong></h1>
+            <form method="POST">
+              {% csrf_token %}
+              {{ form|crispy }}
+              <a href="{% url 'register' %}">Registrate</a>
+              <div class="d-grid mt-5">
+                <button type="submit" class="btn btn-danger btn-block">Iniciar Sesión</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

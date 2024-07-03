@@ -1,0 +1,26 @@
+{% extends 'core/base.html'%}
+{% load static %}
+{% block contenido %}
+{% load crispy_forms_tags %}
+<section class="vh-70 mb-5">
+    <div class="container py-5 h-100">
+      <div class="row d-flex align-items-center justify-content-center h-100">
+        <div class="col-md-8 col-lg-6 col-xl-5">
+          <div class="card" style="border-radius: 1rem;">
+            <div class="card-body p-5">
+              <h2 class="text-center mb-5">Registrarse</h2>
+              <form method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="d-grid gap-2">
+                  <button type="submit" class="btn btn-danger btn-lg">Registrarse</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+{% endblock %}

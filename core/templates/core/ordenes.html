@@ -1,0 +1,119 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block contenido %} 
+<div class="container mt-4 mb-5"> 
+    <div class="table-responsive">
+        <table class="table table-striped shadow">  
+            <thead class="table-dark"> 
+                <tr>
+                    <th scope="col">ID Orden</th>
+                    <th scope="col">RUT</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Dirección</th> 
+                    <th scope="col">Teléfono</th> 
+                    <th scope="col">Email</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Total </th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in listaFacturas %}
+                <tr>
+                    <td>{{ cliente.id }}</td>
+                    <td>{{ cliente.rut }}</td>
+                    <td>{{ cliente.nombre }}</td>
+                    <td>{{ cliente.direccion }}</td>
+                    <td>{{ cliente.telefono }}</td>
+                    <td>{{ cliente.email }}</td>
+                    <td>{{ cliente.fecha }}</td>
+                    
+                    {% for producto in listaProductos %}
+                    <td>{{ producto.nombreProducto }}</td>
+                    <td>${{ producto.precio }}</td>
+                    <td>{{ producto.stock }}</td>
+                    <td>${{ producto.precio|floatformat:"2" }}</td>
+                    {% endfor %}
+
+                    <td>${{ total_final|add:totalIva }}</td>
+                
+                    <td>Creada</td>
+                    <td>
+                        <button class="btn btn-outline-danger" onclick="exportToPDF('{{ cliente.id }}', '{{ cliente.rut }}', '{{ cliente.nombre }}', '{{ cliente.direccion }}', '{{ cliente.telefono }}', '{{ cliente.email }}', '{{ cliente.fecha }}', '{{ total_final }}', '{{ totalIva }}')">Exportar a PDF</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script>
+    function exportToPDF(id, rut, nombre, direccion, telefono, email, fecha, total_final, totalIva) {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('p', 'pt', 'a4');
+
+        doc.setFontSize(12);
+        doc.text('Orden de Compra', 40, 40);
+
+        // Datos del proveedor y cliente
+        doc.text('Datos del proveedor', 40, 70);
+        doc.text(`Nombre o razón social: Delicias Express`, 40, 90);
+        doc.text(`RUT: 8.345.678-K`, 40, 110);
+        doc.text(`Dirección: Puente alto, Chile`, 40, 130);
+        doc.text(`Teléfono: 9-8756760`, 40, 150);
+        doc.text(`Correo electrónico: deliciasE@gmail.com`, 40, 170);
+
+        doc.text('Datos del cliente', 300, 70);
+        doc.text(`Nombre o razón social: ${nombre}`, 300, 90);
+        doc.text(`RUT: ${rut}`, 300, 110);
+        doc.text(`Dirección: ${direccion}`, 300, 130);
+        doc.text(`Teléfono: ${telefono}`, 300, 150);
+        doc.text(`Correo electrónico: ${email}`, 300, 170);
+
+        // Tabla de productos
+        const productos = [];
+
+        '{% for producto in listaProductos %}'
+            productos.push({
+                ref: '#001',
+                descripcion: '{{ producto.nombreProducto }}',
+                cantidad: '{{ producto.stock }}',  // Ajusta la cantidad si la tienes disponible en listaProductos
+                precioUnitario: '${{ producto.precio }}',
+                precioTotal: '${{ total_final|add:totalIva }}'
+            });
+        '{% endfor %}'
+
+        const productosTable = productos.map(producto => [
+            producto.ref, producto.descripcion, producto.cantidad, producto.precioUnitario, producto.precioTotal
+        ]);
+
+        doc.autoTable({
+            startY: 200,
+            head: [['Ref.', 'Descripción', 'Cantidad', 'Precio unitario', 'Precio total']],
+            body: productosTable
+        });
+
+        // Totales
+        const finalY = doc.lastAutoTable.finalY;
+        doc.text(`Total pedido: $${total_final}`, 400, finalY + 50);
+        doc.text(`IVA: 19%`, 400, finalY + 70);
+        doc.text(`Total a pagar: $${parseFloat(total_final) + parseFloat(totalIva)}`, 400, finalY + 90);
+
+        // Otros detalles
+        doc.text(`Fecha de recibo: ${fecha}`, 40, finalY + 140);
+        doc.text(`Dirección de entrega: ${direccion}`, 40, finalY + 160);
+        doc.text('Firma del receptor: _______________', 40, finalY + 180);
+
+        doc.save(`orden_compra_${id}.pdf`);
+    }
+</script>
+
+{% endblock %}

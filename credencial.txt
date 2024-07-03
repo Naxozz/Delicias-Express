@@ -1,0 +1,15 @@
+user:admin
+password:admin
+
+
+#cliente
+user: julio
+
+password:ChicoTulio09
+
+
+#proveedor
+
+user: zapata
+
+password:Tioemilio09
