@@ -70,8 +70,3 @@ def ordenes(request):
 
     return render(request, 'core/ordenes.html', data)
 
-def eliminar(request):
-  
-   
-
-    return redirect(to="ordenes")
