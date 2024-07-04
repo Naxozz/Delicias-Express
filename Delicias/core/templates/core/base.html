@@ -23,14 +23,10 @@
 <body >
   <div class="container-scroller d-flex">
     <!-- partial:./partials/_sidebar.html -->
-    <nav class="sidebar sidebar-offcanvas"  style="background-color: rgb(246, 66, 39);">
+    <nav class="sidebar sidebar-offcanvas"  style="background: linear-gradient(to bottom right, rgb(228, 51, 24), rgb(216, 92, 54));">
       <ul class="nav">
         <li class="nav-item sidebar-category">
-          <p>{{ user.username }}</p>
-          <span></span>
-        </li>
-        <li class="nav-item sidebar-category">
-          <p>Menu</p>
+          <h5 style="color: white;">¡Bienvenido {{ user.username }}!</h5>
           <span></span>
         </li>
         
@@ -42,8 +38,8 @@
         <!-- Menú específico para clientes -->
         <li class="nav-item">
             <a class="nav-link" href="{% url 'index' %}">
-                <i class="mdi mdi-emoticon menu-icon"></i>
-                <span class="menu-title">Home</span>
+                <i class="mdi mdi-home menu-icon"></i>
+                <span class="menu-title">Inicio</span>
             </a>
         </li>
         <li class="nav-item">
@@ -62,12 +58,18 @@
                 <span class="menu-title">Formulario</span>
             </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'editar'  %}">
+              <i class="mdi mdi-chart-pie menu-icon"></i>
+              <span class="menu-title">Editar</span>
+          </a>
+      </li>
         {% endif %}
     </ul>
 {% endif %}
 <!-- Categoría y opciones de cuenta -->
 <li class="nav-item sidebar-category">
-    <p>Páginas</p>
+    <p>Opciones</p>
     <span></span>
 </li>
 <li class="nav-item">
@@ -95,10 +97,10 @@
     <div class="container page-body-wrapper " >
       <!-- partial:./partials/_navbar.html -->
       <nav class=" col-lg-12 col-12 px-0 py-0 py-lg-4 d-flex flex-row">
-        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end" style="margin-left: 250px;">
          
           
-            <img src="{% static 'core/images/logo_git.png' %}" alt="logo" width="900" height="360" />
+            <img src="{% static 'core/images/logo_git.png' %}" alt="logo" width="600" height="360" />
           
         </div>
 

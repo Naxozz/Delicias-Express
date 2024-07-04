@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block contenido %}	
+{% load crispy_forms_tags %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="text-center mb-5">Formulario</h1>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy }}
+              
+                <input type="submit" class="btn btn-success" value="Modificar">
+                <input type="reset" class="btn btn-danger" value="Eliminar">
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

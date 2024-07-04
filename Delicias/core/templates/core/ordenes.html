@@ -18,7 +18,7 @@
                     <th scope="col">Precio</th>
                     <th scope="col">Cantidad</th>
                     <th scope="col">Total</th>
-                    <th scope="col">Total </th>
+                    <th scope="col">Total/c Iva</th>
                     <th scope="col">Estado</th>
                     <th scope="col">Acciones</th>
                 </tr>
@@ -26,7 +26,7 @@
             <tbody>
                 {% for cliente in listaFacturas %}
                 <tr>
-                    <td>{{ cliente.id }}</td>
+                    <td>{{ cliente.idFactura }}</td>
                     <td>{{ cliente.rut }}</td>
                     <td>{{ cliente.nombre }}</td>
                     <td>{{ cliente.direccion }}</td>
@@ -35,18 +35,24 @@
                     <td>{{ cliente.fecha }}</td>
                     
                     {% for producto in listaProductos %}
-                    <td>{{ producto.nombreProducto }}</td>
-                    <td>${{ producto.precio }}</td>
-                    <td>{{ producto.stock }}</td>
-                    <td>${{ producto.precio|floatformat:"2" }}</td>
-                    {% endfor %}
+                        <td>{{ producto.nombreProducto }}</td>
+                        <td>${{ producto.precio }}</td>
+                        <td>{{ producto.stock }}</td>
+                        <td>${{ producto.precio|floatformat:"2" }}</td>
+                        {% endfor %}
 
-                    <td>${{ total_final|add:totalIva }}</td>
-                
-                    <td>Creada</td>
-                    <td>
-                        <button class="btn btn-outline-danger" onclick="exportToPDF('{{ cliente.id }}', '{{ cliente.rut }}', '{{ cliente.nombre }}', '{{ cliente.direccion }}', '{{ cliente.telefono }}', '{{ cliente.email }}', '{{ cliente.fecha }}', '{{ total_final }}', '{{ totalIva }}')">Exportar a PDF</button>
-                    </td>
+                        <td>${{ total_final|add:totalIva }}</td>
+                        
+                        <td>
+                            {% if cliente.estadoFactura.estado == 'creada' %}
+                                <span class="badge badge-warning">creada</span>
+                            {% elif cliente.estadoFactura.estado == 'rectificada' %}
+                                <span class="badge badge-info">rectificada</span>
+                            {% endif %}
+                        
+                        <td>
+                            <button class="btn btn-outline-danger" onclick="exportToPDF('{{ cliente.id }}', '{{ cliente.rut }}', '{{ cliente.nombre }}', '{{ cliente.direccion }}', '{{ cliente.telefono }}', '{{ cliente.email }}', '{{ cliente.fecha }}', '{{ total_final }}', '{{ totalIva }}', '{{ cliente.estadoFactura.estado }}')">Exportar a PDF</button>
+                        </td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -56,14 +62,15 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 <script>
-    function exportToPDF(id, rut, nombre, direccion, telefono, email, fecha, total_final, totalIva) {
+    function exportToPDF(id, rut, nombre, direccion, telefono, email, fecha, total_final, totalIva, estadoFactura) {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF('p', 'pt', 'a4');
 
-        doc.setFontSize(12);
-        doc.text('Orden de Compra', 40, 40);
+        doc.setFontSize(16);
+        doc.text(`Orden de Compra - ${estadoFactura}`, 40, 40);
 
         // Datos del proveedor y cliente
+        doc.setFontSize(11);
         doc.text('Datos del proveedor', 40, 70);
         doc.text(`Nombre o razón social: Delicias Express`, 40, 90);
         doc.text(`RUT: 8.345.678-K`, 40, 110);

@@ -17,10 +17,6 @@ def grupo_requerido(nombre_grupo):
 # @grupo_requerido('admin')
 
 
-
-
-
-
 # Create your views here.
 def index(request):
     return render(request, 'core/index.html')
@@ -86,23 +82,28 @@ def ordenes(request):
         'listaProductos': lista_productos,
         'total_final': total_final,
         'totalIva': totalIva,
+        'tipoEstado': facturas
     }
-    if request.method == 'POST':
-        # Obtener el ID de la factura a aceptar o rechazar desde el formulario
-        factura_id = request.POST.get('factura_id')
-
-        if 'aceptar_factura' in request.POST:
-            factura = get_object_or_404(Factura, id=factura_id)
-            factura.aceptar_factura()
-            messages.success(request, f"Factura {factura_id} aceptada correctamente.")
-            return redirect(reverse('ordenes'))
-
-        elif 'rechazar_factura' in request.POST:
-            motivo_rechazo = request.POST.get('motivo_rechazo', '')
-            factura = get_object_or_404(Factura, id=factura_id)
-            factura.rechazar_factura(motivo=motivo_rechazo)
-            messages.success(request, f"Factura {factura_id} rechazada correctamente.")
-            return redirect(reverse('ordenes'))
-
+   
     return render(request, 'core/ordenes.html', data)
 
+
+
+def editar(request, idFactura):
+    clientes = Cliente.objects.all(idFactura=idFactura)
+
+    data ={
+        'form': ClienteForm(instance=clientes)
+    }
+
+    if request.method == 'POST':
+        formulario = ClienteForm(data=request.POST,instance=clientes, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "modificado correctamente")
+            data['mensaje'] = "Modificado correctamente" 
+        else:
+            data['form'] = formulario
+        
+
+    return render(request, 'core/editar.html',data)

@@ -15,3 +15,10 @@ class ClienteAdmin(admin.ModelAdmin):
     search_fields = ['rut', 'nombre', 'email']
     list_per_page = 10
     list_filter = ['fecha']
+
+@admin.register(Factura)
+class FacturaAdmin(admin.ModelAdmin):
+    list_display = ['estado']
+    search_fields = ['estado']
+    list_per_page = 10
+    list_filter = ['estado']
