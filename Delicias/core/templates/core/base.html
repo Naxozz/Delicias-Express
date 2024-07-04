@@ -33,45 +33,60 @@
           <p>Menu</p>
           <span></span>
         </li>
+        
+
+        {% if user.is_authenticated %}
+    <!-- Menú para usuarios autenticados -->
+    <ul class="nav">
+        {% if user.groups.first.name == "cliente" %}
+        <!-- Menú específico para clientes -->
         <li class="nav-item">
             <a class="nav-link" href="{% url 'index' %}">
-              <i class="mdi mdi-emoticon menu-icon"></i>
-              <span class="menu-title">Home</span>
+                <i class="mdi mdi-emoticon menu-icon"></i>
+                <span class="menu-title">Home</span>
             </a>
-          </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'formulario' %}">
-            <i class="mdi mdi-view-headline menu-icon"></i>
-            <span class="menu-title">Formulario</span>
-          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'ordenes' %}">
-            <i class="mdi mdi-chart-pie menu-icon"></i>
-            <span class="menu-title">Ordenes</span>
-          </a>
+            <a class="nav-link" href="{% url 'ordenes' %}">
+                <i class="mdi mdi-chart-pie menu-icon"></i>
+                <span class="menu-title">Ordenes</span>
+            </a>
         </li>
+        {% endif %}
 
-        
-        <li class="nav-item sidebar-category">
-          <p>Páginas</p>
-          <span></span>
-        </li>
+        {% if user.groups.first.name == "proveedor" %}
+        <!-- Menú específico para proveedores -->
         <li class="nav-item">
-          <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-            <i class="mdi mdi-account menu-icon"></i>
-            <span class="menu-title">Login</span>
-            <i class="menu-arrow"></i>
-          </a>
-          <div class="collapse" id="auth">
-            <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link" href="{% url 'login' %}"> Iniciar Sesión </a></li>
-              <li class="nav-item"> <a class="nav-link" href="{% url 'register' %}"> Registrarse</a></li>
-              <li class="nav-item"> <a class="nav-link" href="{% url 'logout' %}"> Cerrar Sesión </a></li>
-             
-            </ul>
-          </div>
+            <a class="nav-link" href="{% url 'formulario' %}">
+                <i class="mdi mdi-view-headline menu-icon"></i>
+                <span class="menu-title">Formulario</span>
+            </a>
         </li>
+        {% endif %}
+    </ul>
+{% endif %}
+<!-- Categoría y opciones de cuenta -->
+<li class="nav-item sidebar-category">
+    <p>Páginas</p>
+    <span></span>
+</li>
+<li class="nav-item">
+    <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+        <i class="mdi mdi-account menu-icon"></i>
+        <span class="menu-title">Cuenta</span>
+        <i class="menu-arrow"></i>
+    </a>
+    <div class="collapse" id="auth">
+        <ul class="nav flex-column sub-menu">
+            {% if not user.is_authenticated %}
+            <li class="nav-item"> <a class="nav-link" href="{% url 'login' %}"> Iniciar Sesión </a></li>
+            <li class="nav-item"> <a class="nav-link" href="{% url 'register' %}"> Registrarse</a></li>
+            {% else %}
+            <li class="nav-item"> <a class="nav-link" href="{% url 'logout' %}"> Cerrar Sesión </a></li>
+            {% endif %}
+        </ul>
+    </div>
+</li>
         
        
       </ul>

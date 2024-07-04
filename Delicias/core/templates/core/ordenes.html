@@ -18,6 +18,7 @@
                     <th scope="col">Precio</th>
                     <th scope="col">Cantidad</th>
                     <th scope="col">Total</th>
+                    <th scope="col">Total </th>
                     <th scope="col">Estado</th>
                     <th scope="col">Acciones</th>
                 </tr>
@@ -103,7 +104,7 @@
         // Totales
         const finalY = doc.lastAutoTable.finalY;
         doc.text(`Total pedido: $${total_final}`, 400, finalY + 50);
-        doc.text(`IVA: $${totalIva}`, 400, finalY + 70);
+        doc.text(`IVA: 19%`, 400, finalY + 70);
         doc.text(`Total a pagar: $${parseFloat(total_final) + parseFloat(totalIva)}`, 400, finalY + 90);
 
         // Otros detalles

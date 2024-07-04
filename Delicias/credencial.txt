@@ -3,13 +3,13 @@ password:admin
 
 
 #cliente
-user: 
+user: julio
 
-password:
+password:ChicoTulio09
 
 
 #proveedor
 
-user: 
+user: zapata
 
-password:
+password:Tioemilio09

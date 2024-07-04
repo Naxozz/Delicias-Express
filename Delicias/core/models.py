@@ -44,20 +44,15 @@ class Factura(models.Model):
     def __str__(self):
         return f"Factura {self.id} - Estado: {self.estado}"
     
+    def aceptar_factura(self):
+        if self.estado == self.EstadoChoices.POR_ENTREGAR:
+            self.estado = self.EstadoChoices.ACEPTADA
+            self.save()
 
+    def rechazar_factura(self, motivo=None):
+        if self.estado == self.EstadoChoices.POR_ENTREGAR:
+            self.estado = self.EstadoChoices.RECHAZADA
+            if motivo:
+                self.motivo_rechazo = motivo
+            self.save()
 
-#class Pedido(models.Model):
- #   class EstadoChoices(models.TextChoices):
-  #      PENDIENTE = 'PENDIENTE', 'Pendiente'
-   #     EN_PROCESO = 'EN_PROCESO', 'En Proceso'
-    #    ENVIADO = 'ENVIADO', 'Enviado'
-     #   ENTREGADO = 'ENTREGADO', 'Entregado'
-      #  CANCELADO = 'CANCELADO', 'Cancelado'
-
-    #fecha = models.DateField()
-    #total = models.IntegerField()
-    #estado = models.CharField(max_length=50, choices=EstadoChoices.choices, default=EstadoChoices.PENDIENTE)
-    #cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-
-    #def __str__(self):
-     #   return str(self.id)

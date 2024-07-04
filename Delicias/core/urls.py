@@ -7,6 +7,5 @@ urlpatterns = [
     path('register', register, name="register"),
     path('formulario', formulario, name="formulario"),
     path('ordenes', ordenes, name="ordenes"),
-    path('eliminar', eliminar, name="eliminar"),
     
 ]
